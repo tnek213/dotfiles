@@ -1,0 +1,6 @@
+if test -d ~/.bashrc.d; then
+	for part in ~/.bashrc.d/*.sh; do
+		test -r "$part" && source "$part"
+	done
+	unset part
+fi
