@@ -92,7 +92,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec i3-msg exit
 
-bindsym $mod+Shift+g exec --no-startup-id $HOME/.config/i3/gaps-toggle
+bindsym $mod+g exec --no-startup-id $HOME/.config/i3/gaps-toggle
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
