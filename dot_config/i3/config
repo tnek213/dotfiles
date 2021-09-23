@@ -2,12 +2,37 @@
 
 set $mod Mod4
 
-set $left h
-set $down j
-set $up k
+set $left  h
+set $down  j
+set $up    k
 set $right l
 
 font pango:Terminus 13
+
+set $foreground #00ff00
+
+# only for titlebar border, background and text (and I normally don't use titlebars)
+set $unused1 #550000 
+set $unused2 #555555
+set $unused3 #eeeeee
+# really unused by i3
+set $unused4 #000000
+
+# class                 border      backgr.     text        indicator   child_border
+client.focused          $unused1    $unused2    $unused3    #ff0000     #0000ff
+client.focused_inactive $unused1    $unused2    $unused3    #ffff00     #999999
+client.unfocused        $unused1    $unused2    $unused3    #ff4444     #222222
+client.urgent           $unused1    $unused2    $unused3    #ff3333     #ffaa55
+client.placeholder      $unused1    #0c0c0c     #900000     $unused4    #900000
+client.background       #ffffff
+
+# default colors
+#client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+#client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+#client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+#client.urgent           #2f343a #900000 #ffffff #900000   #900000
+#client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+#client.background       #ffffff
 
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym $mod+KP_Add exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -109,8 +134,10 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-for_window [class="Alacritty"] border pixel 1
-for_window [class="Google-chrome"] border pixel 1
+default_border pixel 3
+hide_edge_borders smart
+
+for_window [class="Google-chrome"] border pixel 5
 
 for_window [title="^Android Emulator"] floating enable
 
