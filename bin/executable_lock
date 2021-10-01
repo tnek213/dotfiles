@@ -1,0 +1,14 @@
+#!/bin/bash
+
+tmp="/tmp"
+
+screenshot="$tmp/.screenshot$$.png"
+blurred_screenshot="$tmp/.blurred_screenshot$$.png"
+
+trap "rm -f $screenshot $blurred_screenshot" EXIT
+
+scrot "$screenshot"
+convert "$screenshot" -blur 0x13 "$blurred_screenshot"
+
+i3lock -i "$blurred_screenshot" --nofork
+
