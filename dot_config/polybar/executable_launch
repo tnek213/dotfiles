@@ -3,6 +3,5 @@
 # Terminate already running bar instances
 killall -q polybar
 
-# Launch bar
-echo "---" | tee -a /tmp/polybar-main.log
-polybar main 2>&1 | tee -a /tmp/polybar-main.log & disown
+# Launch bar with logging to journal
+systemd-cat polybar main
