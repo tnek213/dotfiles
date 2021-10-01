@@ -149,6 +149,7 @@ exec_always --no-startup-id $HOME/.config/polybar/launch
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 exec --no-startup-id dunst
+exec --no-startup-id dropbox
 exec --no-startup-id imwheel
 exec --no-startup-id pasystray --volume-max=100 --volume-inc=5 --notify=all
 exec_always --no-startup-id feh --randomize --bg-fill ~/.wallpapers/*
