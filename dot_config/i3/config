@@ -134,10 +134,16 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-default_border pixel 3
+
+set $border_default pixel 3
+set $border_highlight pixel 5
+
+default_border $border_default
 hide_edge_borders smart
 
-for_window [class="Google-chrome"] border pixel 5
+for_window [class="Google-chrome"] border $border_highlight
+
+for_window [title="^Bitwarden" window_role="pop-up"] resize set 450, border pixel $border_default
 
 for_window [title="^Android Emulator"] floating enable
 
