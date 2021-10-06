@@ -8,7 +8,12 @@ blurred_screenshot="$tmp/.blurred_screenshot$$.png"
 trap "rm -f $screenshot $blurred_screenshot" EXIT
 
 scrot "$screenshot"
-convert "$screenshot" -blur 0x8 "$blurred_screenshot"
+
+# convert the screenshot to greyscale and blur it
+convert -color-matrix \
+        '.2 .2 .2
+         .2 .2 .2
+         .2 .2 .2' \
+    -blur 0x8 "$screenshot" "$blurred_screenshot"
 
 i3lock -i "$blurred_screenshot" --nofork
-
