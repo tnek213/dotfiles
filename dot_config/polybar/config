@@ -118,8 +118,8 @@ format-prefix-underline = ${colors.underline1}
 label-layout = %icon%
 label-layout-underline = ${colors.underline1}
 
-layout-icon-0 = se
-layout-icon-1 = us
+layout-icon-0 = se;SE
+layout-icon-1 = us;US
 
 label-indicator-padding = 2
 label-indicator-margin = 1
