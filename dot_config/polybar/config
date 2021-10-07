@@ -134,7 +134,7 @@ label-volume = "%{F#55b52a}%{F-} %percentage%"
 label-volume-foreground = ${root.foreground}
 label-volume-underline = ${colors.underline2}
 
-label-muted = "%{F#55b52a}%{F-}"
+label-muted = "%{F#55b52a}%{F-} "
 label-muted-foreground = #666
 
 bar-volume-width = 10
@@ -182,7 +182,7 @@ interface = enp6s0
 interval = 3.0
 
 format-connected-underline = ${colors.underline1}
-format-connected-prefix = "%{F#55b52a}%{F-}"
+format-connected-prefix = "%{F#55b52a}%{F-} "
 format-connected-prefix-foreground = ${colors.foreground-alt}
 label-connected = %local_ip%
 
