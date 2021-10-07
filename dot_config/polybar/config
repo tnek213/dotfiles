@@ -13,9 +13,9 @@ underline2 = #773355
 underline3 = #557733
 
 [bar/main]
-height = 25
+height = 26
 radius = 0
-fixed-center = false
+fixed-center = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -32,10 +32,10 @@ padding-right = 0
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = Font Awesome 5 Brands,Font Awesome 5 Brands Regular:style=Regular
-font-1 = Font Awesome 5 Free,Font Awesome 5 Free Regular:style=Regular
-font-2 = Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid
-font-3 = Source Code Pro:style=Regular
+font-0 = Source Code Pro:style=Regular;1
+font-1 = Font Awesome 5 Brands,Font Awesome 5 Brands Regular:style=Regular
+font-2 = Font Awesome 5 Free,Font Awesome 5 Free Regular:style=Regular
+font-3 = Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid
 font-4 = terminus:pixelsize=12
 font-5 = unifont:fontformat=truetype:size=8:antialias=false
 
@@ -89,14 +89,14 @@ label-urgent-padding = 2
 
 [module/xwindow]
 type = internal/xwindow
-label = "%{F#55b52a}%{F=} %title:0:180:...%"
+label = "%{F#55b52a}%{F-} %title:0:180:...%"
 label-underline = ${colors.underline2}
 
 [module/date]
 type = internal/date
 interval = 5
 
-date = "%{F#55b52a}%{F-} %e %b"
+date = "%{F#55b52a}%{F-}%e %b"
 date-alt = "%{F#55b52a}%{F-} %Y-%m-%d %{F#55b52a}%{F-} %W"
 
 time = "%{F#55b52a}%{F-} %H:%M"
@@ -111,7 +111,7 @@ label = %date% %time%
 type = internal/xkeyboard
 blacklist-0 = num lock
 
-format-prefix = "%{F#55b52a}%{F=} "
+format-prefix = "%{F#55b52a}%{F-} "
 format-prefix-foreground = ${colors.foreground-alt}
 format-prefix-underline = ${colors.underline1}
 
@@ -134,8 +134,9 @@ label-volume = "%{F#55b52a}%{F-} %percentage%"
 label-volume-foreground = ${root.foreground}
 label-volume-underline = ${colors.underline2}
 
-label-muted = "%{F#55b52a}%{F-} "
+label-muted = "%{F#55b52a}%{F-}"
 label-muted-foreground = #666
+label-muted-underline = ${colors.underline2}
 
 bar-volume-width = 10
 bar-volume-foreground-0 = #55aa55
@@ -146,12 +147,12 @@ bar-volume-foreground-4 = #55aa55
 bar-volume-foreground-5 = #f5a70a
 bar-volume-foreground-6 = #ff5555
 bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
+bar-volume-indicator = ◉
+;bar-volume-indicator-font = 2
+bar-volume-fill = ●
+;bar-volume-fill-font = 2
+bar-volume-empty = ◌
+;bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
 [module/wlan]
@@ -194,7 +195,7 @@ interval = 25
 
 mount-0 = /
 
-label-mounted = "%{F#55b52a}%{F-} %{F#0a81f5}%{F-} %percentage_used%%"
+label-mounted = "%{F#55b52a}%{F-} %percentage_used%%"
 label-mounted-underline = "${colors.underline2}"
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
@@ -210,7 +211,7 @@ label = %percentage_used%%
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = "%{F#55b52a}%{F-} "
+format-prefix = "%{F#55b52a}%{F-}"
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = "${colors.underline1}"
 label = %percentage:2%%
