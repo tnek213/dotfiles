@@ -109,7 +109,6 @@ label = %date% %time%
 
 [module/xkeyboard]
 type = internal/xkeyboard
-blacklist-0 = num lock
 
 format-prefix = "%{F#55b52a}%{F-} "
 format-prefix-foreground = ${colors.foreground-alt}
@@ -125,6 +124,15 @@ label-indicator-padding = 2
 label-indicator-margin = 1
 label-indicator-background = ${colors.secondary}
 label-indicator-underline = ${colors.underline1}
+
+label-indicator-off-capslock = ""
+label-indicator-on-capslock = "%{B#bd2c40}  Caps Lock  %{B-}"
+label-indicator-on-capslock-underline = ${colors.underline1}
+
+label-indicator-on-numlock = ""
+label-indicator-off-numlock = "%{B#bd2c40}  Num Lock Off  %{B-}"
+label-indicator-off-numlock-underline = ${colors.underline1}
+
 
 [module/pulseaudio]
 type = internal/pulseaudio
