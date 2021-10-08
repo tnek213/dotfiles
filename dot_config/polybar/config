@@ -43,7 +43,7 @@ font-5 = unifont:fontformat=truetype:size=8:antialias=false
 
 modules-left = i3
 modules-center = xwindow date
-modules-right = xkeyboard pulseaudio reservedleft wlan eth filesystem memory cpu powermenu
+modules-right = xkeyboard pulseaudio reservedleft wlan eth filesystem memory cpu lock powermenu
 
 tray-position = right
 tray-padding = 13
@@ -237,6 +237,13 @@ format-prefix = "%{F#55b52a}%{F-}"
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = "${colors.underline1}"
 label = %percentage:2%%
+
+[module/lock]
+type = custom/script
+exec = echo " "
+label = "%{F#55b52a}%{F-}"
+format-underline = "${colors.underline2}"
+click-left = $HOME/bin/lock
 
 [module/powermenu]
 type = custom/menu
