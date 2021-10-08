@@ -1,10 +1,26 @@
 #!/bin/bash
 
+scriptdir="$(dirname $(readlink -f -- $BASH_SOURCE))"
+reservedleftscript="$scriptdir/reservedleft"
+
 filename=".i3-gaps-off"
 
 off="${XDG_RUNTIME_DIR:-/tmp}/$filename"
+if [[ -f $off ]]; then
+    offstate=true
+else
+    offstate=false
+fi
 
-if [[ -f $off || $1 == "on" ]]; then
+if [[ $1 == "keep" ]]; then
+    if [[ $offstate == true ]]; then
+        offstate=false
+    else
+        offstate=true
+    fi
+fi
+
+if [[ $offstate == "true" || $1 == "on" ]]; then
     i3-msg gaps outer all set 15
     i3-msg gaps inner all set 15
     rm -f "$off"
@@ -13,3 +29,5 @@ else
     i3-msg gaps inner all set 0
     touch "$off"
 fi
+
+i3-msg gaps left all plus $("$reservedleftscript" get)

@@ -17,6 +17,8 @@ height = 26
 radius = 0
 fixed-center = true
 
+enable-ipc = true
+
 background = ${colors.background}
 foreground = ${colors.foreground}
 
@@ -41,7 +43,7 @@ font-5 = unifont:fontformat=truetype:size=8:antialias=false
 
 modules-left = i3
 modules-center = xwindow date
-modules-right = xkeyboard pulseaudio wlan eth filesystem memory cpu powermenu
+modules-right = xkeyboard pulseaudio reservedleft wlan eth filesystem memory cpu powermenu
 
 tray-position = right
 tray-padding = 13
@@ -94,6 +96,7 @@ label-underline = ${colors.underline2}
 
 [module/date]
 type = internal/date
+
 interval = 5
 
 date = "%{F#55b52a}%{F-}%e %b"
@@ -162,6 +165,17 @@ bar-volume-fill = ●
 bar-volume-empty = ◌
 ;bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
+click-right = pavucontrol
+
+[module/reservedleft]
+type = custom/script
+exec = echo " "
+label = 
+format-underline = #268bd2
+click-left = $HOME/.config/i3/reservedleft set 0
+click-right = $HOME/.config/i3/reservedleft set 1220
+scroll-up = $HOME/.config/i3/reservedleft plus %counter%
+scroll-down = $HOME/.config/i3/reservedleft minus %counter%
 
 [module/wlan]
 type = internal/network

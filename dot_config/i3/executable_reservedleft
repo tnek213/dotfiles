@@ -1,0 +1,46 @@
+#!/bin/bash
+
+scriptdir="$(dirname $(readlink -f -- $BASH_SOURCE))"
+gapstogglescript="$scriptdir/gaps-toggle"
+
+valuefilepart=".reservedleft"
+valuefile="${XDG_RUNTIME_DIR:-/tmp}/$valuefilepart"
+
+current="$(cat "$valuefile" 2>/dev/null)"
+
+step="$2"
+stepmultiplier=50
+
+if [[ ! $current =~ ^[0-9]+$ || $current -lt 0 ]]; then
+    current=0
+fi
+
+usage() {
+    echo "usage: reservedleft plus|minus|set step or reservedleft get" 1>&2
+    echo "       where step must be a positive integer" 1>&2
+}
+
+if [[ $1 != "get" && ! $step =~ ^[1-9][0-9]*$ ]]; then
+    if [[ $1 != "set" ]]; then
+        usage
+        exit 2
+    fi
+fi
+
+if [[ $1 == "get" ]]; then
+    echo $current
+    exit
+elif [[ $1 == "plus" ]]; then
+    current=$(( current + ${2:-1} * stepmultiplier ))
+elif [[ $1 == "minus" ]]; then
+    current=$(( current - ${2:-1} * stepmultiplier ))
+elif [[ $1 == "set" ]]; then
+    current="${step:-0}"
+else
+    usage
+    exit 1
+fi
+
+echo $current > "$valuefile"
+
+"$gapstogglescript" keep
