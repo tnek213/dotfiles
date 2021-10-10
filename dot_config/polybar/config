@@ -170,7 +170,7 @@ click-right = pavucontrol
 [module/reservedleft]
 type = custom/script
 exec = echo " "
-label = 
+label = "%{F#55b52a}%{F-}"
 format-underline = #268bd2
 click-left = $HOME/.config/i3/reservedleft set 0
 click-right = $HOME/.config/i3/reservedleft set 1220
