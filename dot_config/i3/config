@@ -150,6 +150,9 @@ for_window [title="WhatsApp - Google Chrome" class="Google-chrome"] resize set 7
 
 for_window [title="^Android Emulator"] floating enable
 
+for_window [class="Gnome-calculator"] floating enable
+
+
 
 exec --no-startup-id setxkbmap -layout us,se -option grp:lctrl_lshift_toggle
 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ 20%
