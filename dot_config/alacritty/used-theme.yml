@@ -1,0 +1,36 @@
+window:
+  opacity: 0.75
+
+# theme from: https://github.com/eendroroy/alacritty-theme/blob/master/themes/dracula.yaml
+
+# Colors (Dracula)
+colors:
+  # Default colors
+  primary:
+    # background: '0x282a36' # original
+    background: '0x111111' # my edit
+    foreground: '0xf8f8f2'
+
+  # Normal colors
+  normal:
+    # black:   '0x000000' # original
+    black:   '0x777777' # my edit
+    red:     '0xff5555'
+    green:   '0x50fa7b'
+    yellow:  '0xf1fa8c'
+    blue:    '0xbd93f9'
+    magenta: '0xff79c6'
+    cyan:    '0x8be9fd'
+    white:   '0xbbbbbb'
+ 
+  # Bright colors
+  bright:
+    # black:   '0x555555' #original
+    black:   '0xaaaaaa' # my edit
+    red:     '0xff5555'
+    green:   '0x50fa7b'
+    yellow:  '0xf1fa8c'
+    blue:    '0xcaa9fa'
+    magenta: '0xff79c6'
+    cyan:    '0x8be9fd'
+    white:   '0xffffff'
