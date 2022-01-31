@@ -168,3 +168,4 @@ exec --no-startup-id dropbox
 exec --no-startup-id imwheel
 exec --no-startup-id pasystray --volume-max=100 --volume-inc=5 --notify=all
 exec_always --no-startup-id feh --randomize --bg-fill ~/.wallpapers/*
+exec --no-startup-id bluetooth-autoconnect
