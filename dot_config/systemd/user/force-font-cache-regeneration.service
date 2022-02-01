@@ -1,8 +1,0 @@
-[Unit]
-Description=Force font cache renegeration due to issue with siji font package
-
-[Service]
-ExecStart=/usr/bin/fc-cache -f
-
-[Install]
-WantedBy=default.target
