@@ -22,6 +22,8 @@ warn() {
   echo "$1" 1>&2;
 }
 
+set_prop 'hw' 'gfxdriver' "" # set empty as it is used in an if-statement and cannot be missing
+
 if [[ $(chezmoi data | jq -r '.chezmoi.os') == 'linux' ]]; then
   if has xdpyinfo; then
     set_prop 'screen' 'width' "$(xdpyinfo | grep dimensions | awk '{ print $2; }' | awk 'BEGIN {FS="x";} { print $1; }')"
