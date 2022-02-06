@@ -1,3 +1,5 @@
 LICENSE
 README.md
-
+{{- if ne .hw.gfxdriver "nvidia" -}}
+.nvidia-settings-rc
+{{- end -}}
