@@ -1,5 +1,5 @@
 LICENSE
 README.md
-{{ if ne (get .hw "gfxdriver") "nvidia" -}}
+{{ if ne (dig "hw" "gfxdriver" "<< missing >>" .) "nvidia" -}}
 .nvidia-settings-rc
-{{ end -}}
+{{ end }}
