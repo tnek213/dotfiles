@@ -27,7 +27,7 @@ if [[ $(chezmoi data | jq -r '.chezmoi.os') == 'linux' ]]; then
     set_prop 'screen' 'width' "$(xdpyinfo | grep dimensions | awk '{ print $2; }' | awk 'BEGIN {FS="x";} { print $1; }')"
     set_prop 'screen' 'height' "$(xdpyinfo | grep dimensions | awk '{ print $2; }' | awk 'BEGIN {FS="x";} { print $2; }')"
   else
-    warn 'missing xpdyinfo, cannot set screen width and height'
+    warn 'missing xpdyinfo or not in x session, cannot set screen width and height'
   fi
 
   set_prop 'hw' 'gfxdriver' "$(lspci -k | grep -A 2 -E '(VGA|3D)' | grep driver | awk '{ print $5 }')"
