@@ -23,7 +23,7 @@ warn() {
 }
 
 if [[ $(chezmoi data | jq -r '.chezmoi.os') == 'linux' ]]; then
-  if has xdpyinfo; then
+  if has xdpyinfo && xdpyinfo &>/dev/null; then
     set_prop 'screen' 'width' "$(xdpyinfo | grep dimensions | awk '{ print $2; }' | awk 'BEGIN {FS="x";} { print $1; }')"
     set_prop 'screen' 'height' "$(xdpyinfo | grep dimensions | awk '{ print $2; }' | awk 'BEGIN {FS="x";} { print $2; }')"
   else
