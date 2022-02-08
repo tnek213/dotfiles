@@ -43,7 +43,7 @@ font-5 = unifont:fontformat=truetype:size=8:antialias=false
 
 modules-left = i3
 modules-center = xwindow date
-modules-right = xkeyboard pulseaudio reservedleft wlan eth filesystem memory cpu lock powermenu
+modules-right = xkeyboard pulseaudio reservedleft wlan eth filesystem memory battery cpu lock powermenu
 
 tray-position = right
 tray-padding = 13
@@ -177,14 +177,16 @@ click-right = $HOME/.config/i3/reservedleft set 1220
 scroll-up = $HOME/.config/i3/reservedleft plus %counter%
 scroll-down = $HOME/.config/i3/reservedleft minus %counter%
 
+{{ if ne (dig "network" "wireless" "<< missing >>" .) "<< missing >>" -}}
 [module/wlan]
 type = internal/network
-interface = wlp5s0
-interval = 3.0
+interface = {{ .network.wireless }}
+interval = 60.0
 
-format-connected = <ramp-signal> <label-connected>
+format-connected = %{F#55b52a}%{F-} <label-connected>
+;format-connected = <ramp-signal> <label-connected>
 format-connected-underline = ${colors.underline3}
-label-connected = %essid%
+label-connected = %essid% %local_ip%
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
@@ -198,11 +200,13 @@ ramp-signal-2 = 
 ramp-signal-3 = 
 ramp-signal-4 = 
 ramp-signal-foreground = ${colors.foreground-alt}
+{{ end }}
 
+{{ if ne (dig "network" "wired" "<< missing >>" .) "<< missing >>" -}}
 [module/eth]
 type = internal/network
-interface = enp6s0
-interval = 3.0
+interface = {{ .network.wired }}
+interval = 60.0
 
 format-connected-underline = ${colors.underline1}
 format-connected-prefix = "%{F#55b52a}%{F-} "
@@ -210,6 +214,38 @@ format-connected-prefix-foreground = ${colors.foreground-alt}
 label-connected = %local_ip%
 
 format-disconnected =
+{{ end }}
+
+[module/battery]
+type = internal/battery
+
+label-discharging = "%{F#55b52a}%{F-} %percentage%%"
+;label-discharging = "%{F#55b52a} {F-} %percentage%%"
+;label-discharging = "%{F#55b52a} {F-} %percentage%%"
+
+format-discharging-underline = ${colors.underline1}
+
+label-charging = "%{F#55b52a}%{F-} %percentage%%"
+format-charging-underline = ${colors.underline1}
+
+; This is useful in case the battery never reports 100% charge
+full-at = 99
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = ADP1
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval = 5
 
 [module/filesystem]
 type = internal/fs
