@@ -2,7 +2,7 @@
 # editor override which:
 #   1. only intercepts editor calls with exactly one argument (the filename)
 #   2. only intercepts files managed by chezmoi, changing them to chezmoi
-#      chezmoi edit with auto apply
+#      edit with auto apply
 #
 # The goal is to never forget to use chezmoi edit when editing a file it
 # manages, and avoid the resulting hassle.

@@ -4,7 +4,7 @@
 #   2. And also applies for each save (without exiting the editor)
 #
 # The goal is to make it a bit easier to handle configuration files which
-# benefit from a right modify-test-loop.
+# benefit from a tight modify-test-loop.
 
 _chezmoi-override-auto-apply() {
     if [[ $1 == edit ]]; then
