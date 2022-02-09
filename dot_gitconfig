@@ -1,0 +1,9 @@
+[user]
+	email = kent.larsson@gmail.com
+	name = Kent Larsson
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[sequence]
+	editor = rebase-editor
