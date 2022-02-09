@@ -4,3 +4,4 @@ if test -d ~/.bashrc.d; then
 	done
 	unset part
 fi
+eval "$(starship init bash)" # this should be the last line
