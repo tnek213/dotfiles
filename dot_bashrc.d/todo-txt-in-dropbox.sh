@@ -1,5 +1,7 @@
 #!/bin/bash
 
-source ~/Dropbox/todotxt/config
+if [[ -d ~/Dropbox ]]; then
+  source ~/Dropbox/todotxt/config
 
-alias t=todo
+  alias t=todo
+fi
