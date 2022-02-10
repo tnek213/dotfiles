@@ -125,10 +125,10 @@ bindsym $mod+g exec --no-startup-id $HOME/.config/i3/gaps-toggle
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        bindsym $left resize shrink width 10 px or 10 ppt
+        bindsym $left resize grow width 10 px or 10 ppt
         bindsym $down resize grow height 10 px or 10 ppt
         bindsym $up resize shrink height 10 px or 10 ppt
-        bindsym $right resize grow width 10 px or 10 ppt
+        bindsym $right resize shrink width 10 px or 10 ppt
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
