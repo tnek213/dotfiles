@@ -12,7 +12,7 @@ font pango:Terminus 13
 set $foreground #00ff00
 
 # only for titlebar border, background and text (and I normally don't use titlebars)
-set $unused1 #550000 
+set $unused1 #550000
 set $unused2 #555555
 set $unused3 #eeeeee
 # really unused by i3
@@ -84,12 +84,16 @@ set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
 set $ws4 "4"
-set $ws5 "5"
+set $ws5 "5:code"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
-set $ws10 "10"
+set $ws10 "10:chat"
+
+assign [class="Code"] $ws5
+assign [class="Slack"] $ws10
+assign [title="WhatsApp - Google Chrome" class="Google-chrome"] $ws10
 
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -151,8 +155,6 @@ for_window [title="WhatsApp - Google Chrome" class="Google-chrome"] resize set 7
 for_window [title="^Android Emulator"] floating enable
 
 for_window [class="Gnome-calculator"] floating enable
-
-
 
 exec --no-startup-id setxkbmap -layout us,se -option grp:sclk_toggle
 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ 20%
