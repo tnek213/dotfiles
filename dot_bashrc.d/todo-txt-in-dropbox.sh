@@ -3,5 +3,9 @@
 if [[ -d ~/Dropbox ]]; then
   source ~/Dropbox/todotxt/config
 
-  alias t=todo
+  if command -v todo &>/dev/null; then
+    alias t=todo
+  elif command -v todo.sh &>/dev/null
+    alias t=todo.sh
+  fi
 fi
