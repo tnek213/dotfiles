@@ -12,5 +12,5 @@ fi
 if has paru; then
   INSTALL="paru --needed -S"
   $INSTALL informant          # Arch linux news reader
-  $INSTALL kb                 # Text-oriented minimalist cmd knowledge base manager
+  $INSTALL kb                 # Text-oriented minimalist cmd knowledge base manager. See: https://wiki.archlinux.org/title/Kb
 fi
