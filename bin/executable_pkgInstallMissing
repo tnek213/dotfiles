@@ -1,16 +1,41 @@
 #!/bin/bash
 
+TRASH="/tmp"
+DROPBOX="$HOME/Dropbox"
+
 has() {
   command -v "$1" &>/dev/null
 }
 
+err() {
+  echo "$@" 1>&2
+}
+
 if has pacman; then
-  INSTALL="sudo pacman --needed -S"
-  $INSTALL tree               # List directories in a a tree
+  install() { sudo pacman --needed -S $@; }
+  remove() { echo -n 'remove: ' ; sudo pacman --noconfirm -R $@; }
+
+  install tree               # List directories in a a tree
+  if [ -d /sys/class/backlight/intel_backlight ]; then
+    remove xorg-xbacklight
+    install acpilight        # Has xbacklight that works using acpi
+  fi
 fi
 
 if has paru; then
-  INSTALL="paru --needed -S"
-  $INSTALL informant          # Arch linux news reader
-  $INSTALL kb                 # Text-oriented minimalist cmd knowledge base manager. See: https://wiki.archlinux.org/title/Kb
+  install() { paru --needed -S $@; }
+  remove() { echo -n 'remove: ' ; sudo paru --noconfirm -R $@; }
+
+  install informant          # Arch linux news reader
+  install kb                 # Terminal based knowledge mngmt tool
+  KBDIR="$HOME/.kb"
+  if [ -f "$KBDIR"  ] && [ ! -L "$KBDIR" ] && [ -d "$DROPBOX" ]; then
+    err "$KBDIR exists but is not a symlink! Moving to $TRASH"
+    mv -v "$KBDIR" "$TRASH"
+    if [ -d "$DROPBOX/.kb" ]; then
+      ln -sv "$DROPBOX/.kb" "$KBDIR"
+    else
+      err "Missing $DROPBOX/.kb"
+    fi
+  fi
 fi
