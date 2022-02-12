@@ -38,4 +38,5 @@ if has paru; then
       err "Missing $DROPBOX/.kb"
     fi
   fi
+  install nerd-fonts-fira-code  # nice complete font used in my polybar config etc
 fi
