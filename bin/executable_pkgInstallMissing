@@ -15,11 +15,13 @@ if has pacman; then
   install() { sudo pacman --needed -S $@; }
   remove() { echo -n 'remove: ' ; sudo pacman --noconfirm -R $@; }
 
-  install tree               # List directories in a a tree
+  install tree               # list directories in a a tree
   if [ -d /sys/class/backlight/intel_backlight ]; then
     remove xorg-xbacklight
-    install acpilight        # Has xbacklight that works using acpi
+    install acpilight        # has xbacklight that works using acpi
   fi
+  install inkscape           # vector paint program
+  install graphviz           # tool to create graphs from text descr
 fi
 
 if has paru; then
@@ -38,5 +40,11 @@ if has paru; then
       err "Missing $DROPBOX/.kb"
     fi
   fi
-  install nerd-fonts-fira-code  # nice complete font used in my polybar config etc
+  install visual-studio-code-bin   # ide
+  install nerd-fonts-fira-code     # nice complete font used in my polybar config etc
+  install tealdeer                 # gives tl/dr for commands
+  install todotxt                  # todo.txt, my favorite todo manager
+  install krita                    # bitmap paint program
+  install nerd-fonts-fira-code     # font, for programming
+  install nerd-fonts-ibm-plex-mono # font, for programming
 fi
