@@ -1,0 +1,8 @@
+{
+    "workbench.colorTheme": "Default Dark+",
+    "git.autofetch": true,
+    "editor.fontFamily": "'Blex Mono Nerd Font Complete', 'FiraCode Nerd Font Mono', 'NovaMono', 'monospace', monospace",
+    "editor.fontLigatures": true,
+    "editor.cursorStyle": "block",
+    "editor.rulers": [80,120],
+}
