@@ -24,6 +24,14 @@ if has pacman; then
   install graphviz           # tool to create graphs from text descr
   install jq                 # handle json at the command line
   install xz                 # handle XZ and LZMA compressed files (for Flutter)
+  install glu                # libGLU.so.1 (for Flutter: flutter test)
+  install android-udev       # for Android dev (for Flutter)
+  install clang              # compiler (for Flutter Linux target)
+  install cmake              # cmake (for Flutter Linux target)
+  install ninja              # build system (for Flutter Linux target)
+  install pkgconfig          # pkg-config (for Flutter Linux target)
+  install gtk3               # libgtk-3.so (for Flutter Linux target)
+  install wget
 fi
 
 if has paru; then
@@ -49,4 +57,5 @@ if has paru; then
   install krita                    # bitmap paint program
   install nerd-fonts-fira-code     # font, for programming
   install nerd-fonts-ibm-plex-mono # font, for programming
+  install android-studio           # IDE with Android SDK (for Flutter)
 fi
