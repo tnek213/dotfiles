@@ -168,7 +168,7 @@ exec = echo " "
 label = "%{F#55b52a}%{F-}"
 format-underline = #268bd2
 click-left = $HOME/.config/i3/reservedleft set 0
-click-right = $HOME/.config/i3/reservedleft set 1220
+click-right = $HOME/.config/i3/reservedleft set {{ round (mulf (dig "screen" "width" 0 .) 0.23828125) 0 }}
 scroll-up = $HOME/.config/i3/reservedleft plus %counter%
 scroll-down = $HOME/.config/i3/reservedleft minus %counter%
 
