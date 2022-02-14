@@ -23,6 +23,7 @@ if has pacman; then
   install inkscape           # vector paint program
   install graphviz           # tool to create graphs from text descr
   install jq                 # handle json at the command line
+  install xz                 # handle XZ and LZMA compressed files (for Flutter)
 fi
 
 if has paru; then
