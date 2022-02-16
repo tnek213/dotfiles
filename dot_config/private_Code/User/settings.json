@@ -8,5 +8,6 @@
         80,
         120
     ],
-    "editor.fontSize": 20,
+    "window.zoomLevel": 0,
+    "editor.fontSize": 16,
 }
