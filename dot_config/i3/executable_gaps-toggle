@@ -21,13 +21,13 @@ if [[ $1 == "keep" ]]; then
 fi
 
 if [[ $offstate == "true" || $1 == "on" ]]; then
-    i3-msg gaps outer all set 15
-    i3-msg gaps inner all set 15
+    i3-msg gaps outer current set 15
+    i3-msg gaps inner current set 15
     rm -f "$off"
 else
-    i3-msg gaps outer all set 0
-    i3-msg gaps inner all set 0
+    i3-msg gaps outer current set 0
+    i3-msg gaps inner current set 0
     touch "$off"
 fi
 
-i3-msg gaps left all plus $("$reservedleftscript" get)
+i3-msg gaps left current plus $("$reservedleftscript" get)
