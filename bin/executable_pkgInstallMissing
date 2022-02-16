@@ -32,6 +32,7 @@ if has pacman; then
   install pkgconfig          # pkg-config (for Flutter Linux target)
   install gtk3               # libgtk-3.so (for Flutter Linux target)
   install wget
+  install exa                # more featureful ls command
 fi
 
 if has paru; then
@@ -58,4 +59,6 @@ if has paru; then
   install nerd-fonts-fira-code     # font, for programming
   install nerd-fonts-ibm-plex-mono # font, for programming
   install android-studio           # IDE with Android SDK (for Flutter)
+  install ruby-mdless              # like less, but for markdown files
+  install bat                      # Cat clone with syntax highlighting and git integration
 fi
