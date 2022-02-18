@@ -34,6 +34,10 @@ if has pacman; then
   install wget
   install exa                # more featureful ls command
   install nvm                # node version manager
+  install figlet             # for ascii banners
+  instasll toilet            # alternative to figlet
+  install neofetch           # cli system information utility
+  install wttr               # cli weather reporting utility
 fi
 
 if has paru; then
@@ -62,6 +66,8 @@ if has paru; then
   install android-studio           # IDE with Android SDK (for Flutter)
   install ruby-mdless              # like less, but for markdown files
   install bat                      # Cat clone with syntax highlighting and git integration
+  install figlet                   # additional fonts for figlet
+  install toilet-fonts             # additional fonts for toilet
 fi
 
 if has npm; then
