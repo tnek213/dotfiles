@@ -122,8 +122,8 @@ if has npm; then
   install wikit                    # a command line program for getting wikipedia summaries easily
   install movie-cli                # movie info command line tool
   install pageres-cli              # take screenshots of various websites
-  updates                          # updates is a CLI tool which checks for npm dependency updates of the current project and optionally updates package.json
-  bitly-client                     # use bitly from the command line
-  alex                             # helps you find gender favoring, polarizing, race related, or other unequal phrasing in text
-  emoj                             # find relevant emoji from text on the command-line
+  install updates                  # updates is a CLI tool which checks for npm dependency updates of the current project and optionally updates package.json
+  install bitly-client             # use bitly from the command line
+  install alex                     # helps you find gender favoring, polarizing, race related, or other unequal phrasing in text
+  install emoj                     # find relevant emoji from text on the command-line
 fi
