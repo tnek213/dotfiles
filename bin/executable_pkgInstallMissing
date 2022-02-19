@@ -11,15 +11,26 @@ err() {
   echo "$@" 1>&2
 }
 
+TMP_PREFIX="/tmp/.pkgInstallMissing.$$."
+
 if has pacman; then
-  install() { sudo pacman --needed -S $@; }
-  remove() { echo -n 'remove: ' ; sudo pacman --noconfirm -R $@; }
+  PACMAN_ALL="${TMP_PREFIX}all"
+  PACMAN_AUR="${TMP_PREFIX}aur"
+  PACMAN_NORMAL="${TMP_PREFIX}normal"
+  pacman -Qq > "$PACMAN_ALL"
+  pacman -Qqm > "$PACMAN_AUR"
+  sort "$PACMAN_ALL" "$PACMAN_AUR" | uniq -u > "$PACMAN_NORMAL"
+
+  is_installed() { grep -qE "^$1\$" $PACMAN_NORMAL; return $?; }
+  install() { is_installed $1 || sudo pacman -S $1; }
+  remove() { is_installed $1 && sudo pacman --noconfirm -Rs $1; }
 
   install tree               # list directories in a a tree
   if [ -d /sys/class/backlight/intel_backlight ]; then
     remove xorg-xbacklight
     install acpilight        # has xbacklight that works using acpi
   fi
+
   install inkscape           # vector paint program
   install graphviz           # tool to create graphs from text descr
   install jq                 # handle json at the command line
@@ -29,27 +40,31 @@ if has pacman; then
   install clang              # compiler (for Flutter Linux target)
   install cmake              # cmake (for Flutter Linux target)
   install ninja              # build system (for Flutter Linux target)
-  install pkgconfig          # pkg-config (for Flutter Linux target)
+  install pkgconf            # pkg-config (for Flutter Linux target)
   install gtk3               # libgtk-3.so (for Flutter Linux target)
   install wget
   install exa                # more featureful ls command
-  install nvm                # node version manager
   install figlet             # for ascii banners
-  instasll toilet            # alternative to figlet
   install neofetch           # cli system information utility
-  install wttr               # cli weather reporting utility
+  install krita              # bitmap paint program
+  install tealdeer           # gives tl/dr for commands
+  install bat                # Cat clone with syntax highlighting and git integration
+  install figlet             # additional fonts for figlet
 fi
 
 if has paru; then
-  install() { paru --needed -S $@; }
-  remove() { echo -n 'remove: ' ; sudo paru --noconfirm -R $@; }
+  is_installed() { grep -qE "^$1\$" $PACMAN_AUR; return $?; }
+  install() { is_installed $1 || paru -S $1; }
+  remove() { is_installed $1 && paru --noconfirm -Rs $1; }
 
   install informant          # Arch linux news reader
   install kb                 # Terminal based knowledge mngmt tool
   KBDIR="$HOME/.kb"
-  if [ -f "$KBDIR"  ] && [ ! -L "$KBDIR" ] && [ -d "$DROPBOX" ]; then
+  if [ -e "$KBDIR"  ] && [ ! -L "$KBDIR" ]; then
     err "$KBDIR exists but is not a symlink! Moving to $TRASH"
     mv -v "$KBDIR" "$TRASH"
+  fi
+  if [ ! -e "$KBDIR" ]; then
     if [ -d "$DROPBOX/.kb" ]; then
       ln -sv "$DROPBOX/.kb" "$KBDIR"
     else
@@ -58,21 +73,21 @@ if has paru; then
   fi
   install visual-studio-code-bin   # ide
   install nerd-fonts-fira-code     # nice complete font used in my polybar config etc
-  install tealdeer                 # gives tl/dr for commands
   install todotxt                  # todo.txt, my favorite todo manager
-  install krita                    # bitmap paint program
   install nerd-fonts-fira-code     # font, for programming
   install nerd-fonts-ibm-plex-mono # font, for programming
   install android-studio           # IDE with Android SDK (for Flutter)
   install ruby-mdless              # like less, but for markdown files
-  install bat                      # Cat clone with syntax highlighting and git integration
-  install figlet                   # additional fonts for figlet
   install toilet-fonts             # additional fonts for toilet
+  install nvm                      # node version manager
+  install toilet                   # alternative to figlet
+  install wttr                     # cli weather reporting utility
 fi
 
 if has npm; then
-  install() { npm install -g "$1"; }
-  remove() { npm uninstall -g "#1"; }
+  is_installed() { npm list -g --depth 0 $1 &>/dev/null; return $?; }
+  install() { is_installed $1 || npm install -g $1; }
+  remove() { is_installed $1 && npm uninstall -g $1; }
 
   install firebase-tools           # firebase cli tools
   install rebase-editor            # nice tool for interactive git rebases
