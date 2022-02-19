@@ -111,6 +111,7 @@ if has paru; then
   install ncspot                   # cross-platform ncurses spotify client written in rust, inspired by ncmpc and the likes
   install up                       # ultimate plumber is a tool for writing linux pipes with instant live preview
   install bitwarden-cli            # cli app for password manager bitwarden
+  install nativifier               # a command-line tool to easily create a desktop app for any web site with minimal configuration
 fi
 
 if has nvm; then
