@@ -110,9 +110,12 @@ if has paru; then
   install googler                  # google from the command-line
   install ncspot                   # cross-platform ncurses spotify client written in rust, inspired by ncmpc and the likes
   install up                       # ultimate plumber is a tool for writing linux pipes with instant live preview
+  install bitwarden-cli            # cli app for password manager bitwarden
 fi
 
-if has npm; then
+if has nvm; then
+  nvm install
+  nvm install --lts # will use lts for the rest of this script, but default to .nvmrc
   is_installed() { npm list -g --depth 0 $1 &>/dev/null; return $?; }
   install() { is_installed $1 || npm install -g $1; }
   remove() { is_installed $1 && npm uninstall -g $1; }
