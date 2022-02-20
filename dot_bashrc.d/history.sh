@@ -1,4 +1,4 @@
 export HISTSIZE=10000
-export HISTCONTROL=$HISTCONTROL:ignoreboth
+export HISTCONTROL=$HISTCONTROL:ignorespaces
 shopt -s histappend
-export HISTIGNORE="history:pwd"
+export HISTIGNORE="history:pwd:ls:exa:exit"

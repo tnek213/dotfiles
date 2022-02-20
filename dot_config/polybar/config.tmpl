@@ -86,7 +86,7 @@ label-urgent-padding = 2
 
 [module/xwindow]
 type = internal/xwindow
-label = "%{F#55b52a}%{F-} %title:0:180:...%"
+label = "%{F#55b52a}%{F-} %title:0:{{ dig "polybar" "wintitlelen" 100 . }}:...%"
 label-underline = ${colors.underline2}
 
 [module/date]
