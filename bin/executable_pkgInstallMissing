@@ -19,117 +19,142 @@ if has pacman; then
   PACMAN_ALL="${TMP_PREFIX}all"
   PACMAN_AUR="${TMP_PREFIX}aur"
   PACMAN_NORMAL="${TMP_PREFIX}normal"
-  "pacman" -Qq > "$PACMAN_ALL"
-  "pacman" -Qqm > "$PACMAN_AUR"
+  pacman -Qq > "$PACMAN_ALL"
+  pacman -Qqm > "$PACMAN_AUR"
   sort "$PACMAN_ALL" "$PACMAN_AUR" | uniq -u > "$PACMAN_NORMAL"
 
-  is_installed() { "grep" -qE "^$1\$" $PACMAN_NORMAL; return $?; }
-  install() { is_installed $1 || sudo "pacman" -S $1; }
-  remove() { is_installed $1 && sudo "pacman" --noconfirm -Rs $1; }
+  _is_installed() { grep -qE "^$1\$" $PACMAN_NORMAL; return $?; }
+  _install() { _is_installed $1 || sudo pacman -S $1; }
+  _remove() { _is_installed $1 && sudo pacman --noconfirm -Rs $1; }
 
-  install tree               # list directories in a a tree
-  install broot              # tree alternative for large hierarcies, fuzzy search + tree + cd
+  _install tree               # list directories in a a tree
+  _install broot              # tree alternative for large hierarcies, fuzzy search + tree + cd
   if [ -d /sys/class/backlight/intel_backlight ]; then
-    remove xorg-xbacklight
-    install acpilight        # has xbacklight that works using acpi
+    _remove xorg-xbacklight
+    _install acpilight        # has xbacklight that works using acpi
   fi
 
-  install inkscape           # vector paint program
-  install graphviz           # tool to create graphs from text descr
-  install jq                 # handle json at the command line
-  install xz                 # handle xz and lzma compressed files (for flutter)
-  install glu                # libGLU.so.1 (for flutter: flutter test)
-  install android-udev       # for android dev (for flutter)
-  install clang              # compiler (for flutter linux target)
-  install cmake              # cmake (for flutter linux target)
-  install ninja              # build system (for flutter linux target)
-  install pkgconf            # pkg-config (for flutter linux target)
-  install gtk3               # libgtk-3.so (for flutter linux target)
-  install wget
-  install exa                # more featureful ls command
-  install figlet             # for ascii banners
-  install neofetch           # cli system information utility
-  install krita              # bitmap paint program
-  install tealdeer           # gives tl/dr for commands
-  install bat                # cat clone with syntax highlighting and git integration
-  install figlet             # additional fonts for figlet
-  install ranger             # text based file manager
-  install z                  # quickly jump to most visited directories in terminal
-  install fzf                # command line fuzzy finder
-  install fd                 # simple, fast and user-friendly alternative to find
-  install ripgrep            # search tool that combines the usability of ag with the raw speed of grep
-  install htop               # interactive process viewer like top
-  install glances            # cli curses-based monitoring tool
-  install strace             # a diagnostic, debugging and instructional userspace tracer
-  install ctop               # top-like interface for container metrics (like Docker)
-  install asciinema          # record and share terminal sessions
-  install httpie             # curl alternative
-  install ncdu               # disk usage analyzer with an ncurses interface
-  install direnv             # a shell extension that manages your environment
-  install github-cli         # the github cli
-  install gnu-netcat         # used by for example https://streamhut.io/ to share the terminal
-  install translate-shell    # a command-line interface and interactive shell for google translate
+  _install inkscape           # vector paint program
+  _install graphviz           # tool to create graphs from text descr
+  _install jq                 # handle json at the command line
+  _install xz                 # handle xz and lzma compressed files (for flutter)
+  _install glu                # libGLU.so.1 (for flutter: flutter test)
+  _install android-udev       # for android dev (for flutter)
+  _install clang              # compiler (for flutter linux target)
+  _install cmake              # cmake (for flutter linux target)
+  _install ninja              # build system (for flutter linux target)
+  _install pkgconf            # pkg-config (for flutter linux target)
+  _install gtk3               # libgtk-3.so (for flutter linux target)
+  _install wget
+  _install exa                # more featureful ls command
+  _install figlet             # for ascii banners
+  _install neofetch           # cli system information utility
+  _install krita              # bitmap paint program
+  _install tealdeer           # gives tl/dr for commands
+  _install bat                # cat clone with syntax highlighting and git integration
+  _install figlet             # additional fonts for figlet
+  _install ranger             # text based file manager
+  _install z                  # quickly jump to most visited directories in terminal
+  _install fzf                # command line fuzzy finder
+  _install fd                 # simple, fast and user-friendly alternative to find
+  _install ripgrep            # search tool that combines the usability of ag with the raw speed of grep
+  _install htop               # interactive process viewer like top
+  _install glances            # cli curses-based monitoring tool
+  _install strace             # a diagnostic, debugging and instructional userspace tracer
+  _install ctop               # top-like interface for container metrics (like Docker)
+  _install asciinema          # record and share terminal sessions
+  _install httpie             # curl alternative
+  _install ncdu               # disk usage analyzer with an ncurses interface
+  _install direnv             # a shell extension that manages your environment
+  _install github-cli         # the github cli
+  _install gnu-netcat         # used by for example https://streamhut.io/ to share the terminal
+  _install translate-shell    # a command-line interface and interactive shell for google translate
+  _install libqalculate       # cli calculator (named qalc)
+  _install libreoffice-still        # office suite (stable version)
+  _install vlc                      # multi-platform mpeg, vcd/dvd, and divx player
+  _install gimp                     # gnu image manipulation program
+  _install audacity                 # a program that lets you manipulate digital audio waveforms
+  _install inkscape                 # professional vector graphics editor
+  _install krita                    # edit and paint images
+  _install discord                  # all-in-one voice and text chat for gamers that's free and secure
+  _install deluge-gtk               # deluge bittorrent client
+  _install vim                      # text editor
+  _install nano                     # text editor
+  _install blender                  # a fully integrated 3d graphics creation suite
+  _install firefox                  # standalone web browser from mozilla.org
 fi
 
 if has paru; then
-  is_installed() { "grep" -qE "^$1\$" $PACMAN_AUR; return $?; }
-  install() { is_installed $1 || "paru" -S $1; }
-  remove() { is_installed $1 && "paru" --noconfirm -Rs $1; }
+  _is_installed() { grep -qE "^$1\$" $PACMAN_AUR; return $?; }
+  _install() { _is_installed $1 || paru -S $1; }
+  _remove() { _is_installed $1 && paru --noconfirm -Rs $1; }
 
-  install informant          # arch linux news reader
-  install kb                 # terminal based knowledge management tool
+  _install informant          # arch linux news reader
+  _install kb                 # terminal based knowledge management tool
   KBDIR="$HOME/.kb"
   if [ -e "$KBDIR"  ] && [ ! -L "$KBDIR" ]; then
     err "$KBDIR exists but is not a symlink! Moving to $TRASH"
-    "mv" -v "$KBDIR" "$TRASH"
+    mv -v "$KBDIR" "$TRASH"
   fi
   if [ ! -e "$KBDIR" ]; then
     if [ -d "$DROPBOX/.kb" ]; then
-      "ln" -sv "$DROPBOX/.kb" "$KBDIR"
+      ln -sv "$DROPBOX/.kb" "$KBDIR"
     else
       err "Missing $DROPBOX/.kb"
     fi
   fi
-  install visual-studio-code-bin   # ide
-  install nerd-fonts-fira-code     # nice complete font used in my polybar config etc
-  install todotxt                  # todo.txt, my favorite todo manager
-  install nerd-fonts-fira-code     # font, for programming
-  install nerd-fonts-ibm-plex-mono # font, for programming
-  install android-studio           # ide with android sdk (for flutter)
-  install ruby-mdless              # like less, but for markdown files
-  install toilet-fonts             # additional fonts for toilet
-  install nvm                      # node version manager
-  install toilet                   # alternative to figlet
-  install wttr                     # cli weather reporting utility
-  install ovh-ttyrec-git           # record terminal and play with ttyplay
-  install ttygif                   # turn ttyrec recordings into gifs
-  install sysz                     # fzf terminal ui for systemctl
-  install paruz                    # a fzf terminal ui for paru or pacman
-  install lazydocker               # a simple terminal ui for docker and docker-compose
-  install litecli                  # a command-line client for sqlite databases that has auto-completion and syntax highlighting
-  install pgcli                    # a command line interface for postgres with auto-completion and syntax highlighting
-  install mycli                    # a terminal client for mysql with autocompletion and syntax highlighting
-  install googler                  # google from the command-line
-  install ncspot                   # cross-platform ncurses spotify client written in rust, inspired by ncmpc and the likes
-  install up                       # ultimate plumber is a tool for writing linux pipes with instant live preview
-  install nodejs-nativefier        # a command-line tool to easily create a desktop app for any web site with minimal configuration
+  _install remarkable               # a free fully featured markdown editor for linux0
+  _install visual-studio-code-bin   # ide
+  _install nerd-fonts-fira-code     # nice complete font used in my polybar config etc
+  _install todotxt                  # todo.txt, my favorite todo manager
+  _install nerd-fonts-fira-code     # font, for programming
+  _install nerd-fonts-ibm-plex-mono # font, for programming
+  _install android-studio           # ide with android sdk (for flutter)
+  _install ruby-mdless              # like less, but for markdown files
+  _install toilet-fonts             # additional fonts for toilet
+  _install nvm                      # node version manager
+  _install toilet                   # alternative to figlet
+  _install wttr                     # cli weather reporting utility
+  _install ovh-ttyrec-git           # record terminal and play with ttyplay
+  _install ttygif                   # turn ttyrec recordings into gifs
+  _install sysz                     # fzf terminal ui for systemctl
+  _install paruz                    # a fzf terminal ui for paru or pacman
+  _install lazydocker               # a simple terminal ui for docker and docker-compose
+  _install litecli                  # a command-line client for sqlite databases that has auto-completion and syntax highlighting
+  _install pgcli                    # a command line interface for postgres with auto-completion and syntax highlighting
+  _install mycli                    # a terminal client for mysql with autocompletion and syntax highlighting
+  _install googler                  # google from the command-line
+  _install ncspot                   # cross-platform ncurses spotify client written in rust, inspired by ncmpc and the likes
+  _install up                       # ultimate plumber is a tool for writing linux pipes with instant live preview
+  _install nodejs-nativefier        # a command-line tool to easily create a desktop app for any web site with minimal configuration
+  _install visual-studio-code-bin   # code is a cross-platform text editor developed by microsoft, built on the electron framework. microsoft branded binary release
+  _install slack-desktop            # slack desktop (beta) for linux
+  _install google-chrome            # the popular and trusted web browser by google (stable channel)
+  _install skypeforlinux-stable-bin # skype for linux - stable/release version
+  _install teams                    # microsoft teams for linux is your chat-centered workspace in office 365
+  _install dropbox                  # a free service that lets you bring your photos, docs, and videos anywhere and share them easily
+  rm -rf ~/.dropbox-dist
+  install -dm 0 ~/.dropbox-dist
+  _install thunar-dropbox           # plugin for thunar that adds context-menu items for dropbox
+  _install dropbox-cli              # command line interface for dropbox
 fi
 
 if has nvm; then
-  "nvm" install
-  "nvm" install --lts # will use lts for the rest of this script, but default to .nvmrc
-  is_installed() { "npm" list -g --depth 0 $1 &>/dev/null; return $?; }
-  install() { is_installed $1 || "npm" install -g $1; }
-  remove() { is_installed $1 && "npm" uninstall -g $1; }
+  nvm install
+  exit
+  nvm _install --lts # will use lts for the rest of this script, but default to .nvmrc
+  _is_installed() { npm list -g --depth 0 $1 &>/dev/null; return $?; }
+  _install() { _is_installed $1 || npm install -g $1; }
+  _remove() { _is_installed $1 && npm uninstall -g $1; }
 
-  install firebase-tools           # firebase cli tools
-  install rebase-editor            # nice tool for interactive git rebases
-  install wikit                    # a command line program for getting wikipedia summaries easily
-  install movie-cli                # movie info command line tool
-  install pageres-cli              # take screenshots of various websites
-  install updates                  # updates is a CLI tool which checks for npm dependency updates of the current project and optionally updates package.json
-  install bitly-client             # use bitly from the command line
-  install alex                     # helps you find gender favoring, polarizing, race related, or other unequal phrasing in text
-  install emoj                     # find relevant emoji from text on the command-line
-  install @bitwarden/cli           # cli app for password manager bitwarden
+  _install firebase-tools           # firebase cli tools
+  _install rebase-editor            # nice tool for interactive git rebases
+  _install wikit                    # a command line program for getting wikipedia summaries easily
+  _install movie-cli                # movie info command line tool
+  _install pageres-cli              # take screenshots of various websites
+  _install updates                  # updates is a CLI tool which checks for npm dependency updates of the current project and optionally updates package.json
+  _install bitly-client             # use bitly from the command line
+  _install alex                     # helps you find gender favoring, polarizing, race related, or other unequal phrasing in text
+  _install emoj                     # find relevant emoji from text on the command-line
+  _install @bitwarden/cli           # cli app for password manager bitwarden
 fi
