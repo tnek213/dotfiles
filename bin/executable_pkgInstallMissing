@@ -1,7 +1,5 @@
 #!/bin/bash
 
-. ~/.bashrc
-
 TRASH="/tmp"
 DROPBOX="$HOME/Dropbox"
 
@@ -24,52 +22,51 @@ if has pacman; then
   sort "$PACMAN_ALL" "$PACMAN_AUR" | uniq -u > "$PACMAN_NORMAL"
 
   _is_installed() { grep -qE "^$1\$" $PACMAN_NORMAL; return $?; }
-  _install() { _is_installed $1 || sudo pacman -S $1; }
-  _remove() { _is_installed $1 && sudo pacman --noconfirm -Rs $1; }
+  _install() { _is_installed "$1" || sudo pacman -S "$1"; }
+  _remove() { _is_installed "$1" && sudo pacman --noconfirm -Rs "$1"; }
 
-  _install tree               # list directories in a a tree
-  _install broot              # tree alternative for large hierarcies, fuzzy search + tree + cd
+  _install android-udev             # for android dev (for flutter)
+  _install tree                     # list directories in a a tree
+  _install broot                    # tree alternative for large hierarcies, fuzzy search + tree + cd
   if [ -d /sys/class/backlight/intel_backlight ]; then
     _remove xorg-xbacklight
-    _install acpilight        # has xbacklight that works using acpi
+    _install acpilight              # has xbacklight that works using acpi
   fi
-
-  _install inkscape           # vector paint program
-  _install graphviz           # tool to create graphs from text descr
-  _install jq                 # handle json at the command line
-  _install xz                 # handle xz and lzma compressed files (for flutter)
-  _install glu                # libGLU.so.1 (for flutter: flutter test)
-  _install android-udev       # for android dev (for flutter)
-  _install clang              # compiler (for flutter linux target)
-  _install cmake              # cmake (for flutter linux target)
-  _install ninja              # build system (for flutter linux target)
-  _install pkgconf            # pkg-config (for flutter linux target)
-  _install gtk3               # libgtk-3.so (for flutter linux target)
-  _install wget
-  _install exa                # more featureful ls command
-  _install figlet             # for ascii banners
-  _install neofetch           # cli system information utility
-  _install krita              # bitmap paint program
-  _install tealdeer           # gives tl/dr for commands
-  _install bat                # cat clone with syntax highlighting and git integration
-  _install figlet             # additional fonts for figlet
-  _install ranger             # text based file manager
-  _install z                  # quickly jump to most visited directories in terminal
-  _install fzf                # command line fuzzy finder
-  _install fd                 # simple, fast and user-friendly alternative to find
-  _install ripgrep            # search tool that combines the usability of ag with the raw speed of grep
-  _install htop               # interactive process viewer like top
-  _install glances            # cli curses-based monitoring tool
-  _install strace             # a diagnostic, debugging and instructional userspace tracer
-  _install ctop               # top-like interface for container metrics (like Docker)
-  _install asciinema          # record and share terminal sessions
-  _install httpie             # curl alternative
-  _install ncdu               # disk usage analyzer with an ncurses interface
-  _install direnv             # a shell extension that manages your environment
-  _install github-cli         # the github cli
-  _install gnu-netcat         # used by for example https://streamhut.io/ to share the terminal
-  _install translate-shell    # a command-line interface and interactive shell for google translate
-  _install libqalculate       # cli calculator (named qalc)
+  _install inkscape                 # vector paint program
+  _install graphviz                 # tool to create graphs from text descr
+  _install jq                       # handle json at the command line
+  _install xz                       # handle xz and lzma compressed files (for flutter)
+  _install glu                      # libGLU.so.1 (for flutter: flutter test)
+  _install clang                    # compiler (for flutter linux target)
+  _install cmake                    # cmake (for flutter linux target)
+  _install ninja                    # build system (for flutter linux target)
+  _install pkgconf                  # pkg-config (for flutter linux target)
+  _install gtk3                     # libgtk-3.so (for flutter linux target)
+  _install wget                     # get files over http
+  _install exa                      # more featureful ls command
+  _install figlet                   # for ascii banners
+  _install neofetch                 # cli system information utility
+  _install krita                    # bitmap paint program
+  _install tealdeer                 # gives tl/dr for commands
+  _install bat                      # cat clone with syntax highlighting and git integration
+  _install figlet                   # additional fonts for figlet
+  _install ranger                   # text based file manager
+  _install z                        # quickly jump to most visited directories in terminal
+  _install fzf                      # command line fuzzy finder
+  _install fd                       # simple, fast and user-friendly alternative to find
+  _install ripgrep                  # search tool that combines the usability of ag with the raw speed of grep
+  _install htop                     # interactive process viewer like top
+  _install glances                  # cli curses-based monitoring tool
+  _install strace                   # a diagnostic, debugging and instructional userspace tracer
+  _install ctop                     # top-like interface for container metrics (like Docker)
+  _install asciinema                # record and share terminal sessions
+  _install httpie                   # curl alternative
+  _install ncdu                     # disk usage analyzer with an ncurses interface
+  _install direnv                   # a shell extension that manages your environment
+  _install github-cli               # the github cli
+  _install gnu-netcat               # used by for example https://streamhut.io/ to share the terminal
+  _install translate-shell          # a command-line interface and interactive shell for google translate
+  _install libqalculate             # cli calculator (named qalc)
   _install libreoffice-still        # office suite (stable version)
   _install vlc                      # multi-platform mpeg, vcd/dvd, and divx player
   _install gimp                     # gnu image manipulation program
@@ -86,11 +83,11 @@ fi
 
 if has paru; then
   _is_installed() { grep -qE "^$1\$" $PACMAN_AUR; return $?; }
-  _install() { _is_installed $1 || paru -S $1; }
-  _remove() { _is_installed $1 && paru --noconfirm -Rs $1; }
+  _install() { _is_installed "$1" || paru -S "$1"; }
+  _remove() { _is_installed "$1" && paru --noconfirm -Rs "$1"; }
 
-  _install informant          # arch linux news reader
-  _install kb                 # terminal based knowledge management tool
+  _install informant                # arch linux news reader
+  _install kb                       # terminal based knowledge management tool
   KBDIR="$HOME/.kb"
   if [ -e "$KBDIR"  ] && [ ! -L "$KBDIR" ]; then
     err "$KBDIR exists but is not a symlink! Moving to $TRASH"
@@ -137,15 +134,16 @@ if has paru; then
   install -dm 0 ~/.dropbox-dist
   _install thunar-dropbox           # plugin for thunar that adds context-menu items for dropbox
   _install dropbox-cli              # command line interface for dropbox
+  _install android-studio           # ide for android development
 fi
 
+. /usr/share/nvm/init-nvm.sh        # get nvm into path
 if has nvm; then
-  nvm install
-  exit
-  nvm _install --lts # will use lts for the rest of this script, but default to .nvmrc
-  _is_installed() { npm list -g --depth 0 $1 &>/dev/null; return $?; }
-  _install() { _is_installed $1 || npm install -g $1; }
-  _remove() { _is_installed $1 && npm uninstall -g $1; }
+  nvm install 2>&1 | grep -Ev '^(Found|v.*already|Now using node v)'
+  nvm install --lts 2>&1 | grep -Ev '^(Found|v.*already|Now using node v)'
+  _is_installed() { npm list -g --depth 0 "$1" &>/dev/null; return $?; }
+  _install() { _is_installed "$1" || npm install -g "$1"; }
+  _remove() { _is_installed "$1" && npm uninstall -g "$1"; }
 
   _install firebase-tools           # firebase cli tools
   _install rebase-editor            # nice tool for interactive git rebases
