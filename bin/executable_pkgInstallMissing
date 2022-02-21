@@ -80,6 +80,7 @@ if has pacman; then
   _install blender                  # a fully integrated 3d graphics creation suite
   _install firefox                  # standalone web browser from mozilla.org
   _install xclip                    # command line interface to the x11 clipboard
+  _install inetutils          # for telnet client
 fi
 
 if has paru; then
