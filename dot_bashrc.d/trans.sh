@@ -1,2 +1,2 @@
-alias trans-sv-en="trans sv:en"
-alias trans-en-sc="trans en:sv"
+alias trans-sv="trans sv:en"
+alias trans-en="trans en:sv"
