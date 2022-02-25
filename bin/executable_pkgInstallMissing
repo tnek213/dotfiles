@@ -105,7 +105,8 @@ if has paru; then
       err "Missing $DROPBOX/.kb"
     fi
   fi
-  _install remarkable               # a free fully featured markdown editor for linux0
+  _install github-desktop-bin       # gui for managing git and github
+  _install remarkable               # a free fully featured markdown editor for linux
   _install visual-studio-code-bin   # ide
   _install nerd-fonts-fira-code     # nice complete font used in my polybar config etc
   _install todotxt                  # todo.txt, my favorite todo manager
