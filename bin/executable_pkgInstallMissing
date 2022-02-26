@@ -150,7 +150,7 @@ if has nvm; then
   npm list -g --depth 0 2>&1 | grep '^.─' | sed -E 's/[^ ]+ //' | sed -E 's/@[^@]+$//' >"$NPM"
   nvm install 2>&1 | grep -Ev '^(Found|v.*already|Now using node v)'
   nvm install --lts 2>&1 | grep -Ev '^(Found|v.*already|Now using node v)'
-  _is_installed() { grep -q "$NPM"; }
+  _is_installed() { grep -q "$1" "$NPM"; }
   _install() { _is_installed "$1" || npm install -g "$1"; }
   _remove() { _is_installed "$1" && npm uninstall -g "$1"; }
 
