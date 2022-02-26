@@ -84,6 +84,7 @@ if has pacman; then
   _install mysql-workbench          # cross-platform, visual database design tool developed by mysql
   _install gnome-keyring            # for secrets, used by mysql-workbench
   _install libsecret                # for secrets, used by mysql-workbench
+  _install whois                    # whois client
 fi
 
 if has paru; then
@@ -145,9 +146,11 @@ fi
 
 . /usr/share/nvm/init-nvm.sh        # get nvm into path
 if has nvm; then
+  NPM="${TMP_PREFIX}npm"
+  npm list -g --depth 0 2>&1 | grep '^.─' | sed -E 's/[^ ]+ //' | sed -E 's/@[^@]+$//' >"$NPM"
   nvm install 2>&1 | grep -Ev '^(Found|v.*already|Now using node v)'
   nvm install --lts 2>&1 | grep -Ev '^(Found|v.*already|Now using node v)'
-  _is_installed() { npm list -g --depth 0 "$1" &>/dev/null; return $?; }
+  _is_installed() { grep -q "$NPM"; }
   _install() { _is_installed "$1" || npm install -g "$1"; }
   _remove() { _is_installed "$1" && npm uninstall -g "$1"; }
 
