@@ -85,6 +85,7 @@ if has pacman; then
   _install gnome-keyring            # for secrets, used by mysql-workbench
   _install libsecret                # for secrets, used by mysql-workbench
   _install whois                    # whois client
+  _install dnsutils                 # for nslookup etc
 fi
 
 if has paru; then
