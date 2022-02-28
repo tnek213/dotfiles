@@ -86,6 +86,7 @@ if has pacman; then
   _install libsecret                # for secrets, used by mysql-workbench
   _install whois                    # whois client
   _install dnsutils                 # for nslookup etc
+  _install perl-image-exiftool      # exiftool, to extract/change exif info
 fi
 
 if has paru; then
