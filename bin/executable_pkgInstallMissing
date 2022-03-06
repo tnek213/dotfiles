@@ -46,7 +46,8 @@ if has pacman; then
   _install exa                      # more featureful ls command
   _install figlet                   # for ascii banners
   _install neofetch                 # cli system information utility
-  _install krita                    # bitmap paint program
+  _install krita                    # advanced bitmap paint program
+  _install pinta                    # easy bitmap paint program
   _install tealdeer                 # gives tl/dr for commands
   _install bat                      # cat clone with syntax highlighting and git integration
   _install figlet                   # additional fonts for figlet
@@ -85,7 +86,7 @@ if has pacman; then
   _install gnome-keyring            # for secrets, used by mysql-workbench
   _install libsecret                # for secrets, used by mysql-workbench
   _install whois                    # whois client
-  _install dnsutils                 # for nslookup etc
+  _install bind                     # for nslookup etc
   _install perl-image-exiftool      # exiftool, to extract/change exif info
 fi
 
