@@ -1,4 +1,4 @@
 #!/bin/bash
 
-date +"%F %R" | tee --append ~/timestamps.txt
+echo "$(date +"%F %R") $@" | tee --append ~/Dropbox/timestamps.txt
 
