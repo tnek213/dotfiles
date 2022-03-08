@@ -85,6 +85,7 @@ if has pacman; then
   _install mysql-workbench          # cross-platform, visual database design tool developed by mysql
   _install gnome-keyring            # for secrets, used by mysql-workbench
   _install libsecret                # for secrets, used by mysql-workbench
+  _install seahorse                 # for secrets, manage the keyring
   _install whois                    # whois client
   _install bind                     # for nslookup etc
   _install perl-image-exiftool      # exiftool, to extract/change exif info
