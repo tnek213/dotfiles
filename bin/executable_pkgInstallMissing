@@ -91,6 +91,7 @@ if has pacman; then
   _install perl-image-exiftool      # exiftool, to extract/change exif info
   _install sqlite                   # a c library that implements an sql database engine
   _install sqlitebrowser            # sqlite database browser is a light gui editor for sqlite databases, built on top of qt
+  _install csvkit                   # A suite of utilities for converting to and working with CSV
 fi
 
 if has paru; then
