@@ -170,4 +170,8 @@ if has nvm; then
   _install alex                     # helps you find gender favoring, polarizing, race related, or other unequal phrasing in text
   _install emoj                     # find relevant emoji from text on the command-line
   _install @bitwarden/cli           # cli app for password manager bitwarden
+  _install git-checkout-interactive # command: gci, interactive checkout of branches
+  _install npm-check-updates        # upgrade npm dependencies, example: npx npm-check-updates --upgrade --doctor --peer --doctorTest ./nogit-healthcheck
+  _install madge                    # generate dependency graphs from js/ts code
+  _install arkit                    # generete js/ts architecture diagrams
 fi
