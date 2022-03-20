@@ -178,4 +178,5 @@ if has nvm; then
   _install npm-check-updates        # upgrade npm dependencies, example: npx npm-check-updates --upgrade --doctor --peer --doctorTest ./nogit-healthcheck
   _install madge                    # generate dependency graphs from js/ts code
   _install arkit                    # generete js/ts architecture diagrams
+  _install eslint-watch             # command line improvements to eslint
 fi
