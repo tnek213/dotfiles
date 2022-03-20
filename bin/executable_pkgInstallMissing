@@ -94,6 +94,7 @@ if has pacman; then
   _install csvkit                   # A suite of utilities for converting to and working with CSV
   _install hyperfine                # command line benchmarking tool
   _install zip                      # create zip archives
+  _install filelight                # view disk usage information
 fi
 
 if has paru; then
