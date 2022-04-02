@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# if cwd contains a .vscode, open here
+
+if [ -d "$(pwd)/.vscode" ]; then
+    code .
+    exit
+fi
+
+child_dir_results="$(find . -type d -iname '.vscode' -not -path '*/node_modules/*')"
+
+child_dir_results_count="$(( $(echo -n $child_dir_results | wc -l)  ))"
+
+if [[ $child_dir_results_count > 0 ]]; then
+    child_dir_first_result="$(dirname $child_dir_results | head -n 1)"
+fi
+
+
+# if there is exactly one .vscode in a subfolder, open it
+
+if [[ $child_dir_results_count == 1 ]]; then
+    code "$child_dir_first_result"
+    exit
+fi
+
+# if there is a .vscode in a parent folder, open it
+
+while [[ "$(pwd)" != "/" ]]; do
+    cd ..
+
+    if [ -d "$(pwd)/.vscode" ]; then
+        code .
+        exit
+    fi
+done
+
+# open the first .vscode in a subfolder
+
+if [[ $child_dir_results_count > 0 ]]; then
+    cd "$child_dir_first_result"
+    code .
+    exit
+fi
+
+# open vscode in the current directory
+
+code .
