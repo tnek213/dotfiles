@@ -1,13 +1,38 @@
 {
-    "workbench.colorTheme": "Default Dark+",
-    "git.autofetch": true,
-    "editor.fontFamily": "'BlexMono Nerd Font', 'FiraCode Nerd Font Mono', 'NovaMono', 'monospace', monospace",
-    "editor.fontLigatures": true,
-    "editor.cursorStyle": "block",
-    "editor.rulers": [
-        80,
-        120
-    ],
-    "window.zoomLevel": 0,
-    "editor.fontSize": 16,
+  "editor.copyWithSyntaxHighlighting": false,
+  "editor.cursorBlinking": "blink",
+  "editor.cursorStyle": "block",
+  "editor.fontFamily": "'BlexMono Nerd Font', 'FiraCode Nerd Font Mono', 'NovaMono', 'monospace', monospace",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 16,
+  "editor.hover.delay": 500,
+  "editor.rulers": [80, 120],
+  "eslint.lintTask.enable": true,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "files.exclude": {
+    "**/.git": true,
+    "**/lib": true,
+    "**/node_modules": true
+  },
+  "files.simpleDialog.enable": true,
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "git.fetchOnPull": true,
+  "gitlens.showWelcomeOnInstall": false,
+  "gitlens.showWhatsNewAfterUpgrades": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "workbench.colorTheme": "Default Dark+",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

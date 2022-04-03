@@ -1,9 +1,15 @@
 [user]
-	email = kent.larsson@gmail.com
-	name = Kent Larsson
+  email = kent.larsson@gmail.com
+  name = Kent Larsson
 [init]
-	defaultBranch = main
+  defaultBranch = main
 [pull]
-	rebase = true
+  rebase = true
 [sequence]
-	editor = rebase-editor
+  editor = rebase-editor
+[alias]
+  last = log -1 HEAD --stat
+  search = !git rev-list --all | xargs git grep -F
+  soft = reset HEAD~1 --soft
+  done = !git push --force-with-lease
+  wip = !gwip

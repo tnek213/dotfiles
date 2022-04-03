@@ -1,0 +1,130 @@
+#!/bin/bash
+
+set -e
+
+stderr() { printf "%s\n" "$@" >&2; }
+error() { stderr "error: $@"; exit 1; }
+warn() { stderr "warn: $@"; }
+wipMarker="<< WIP >>"
+
+if ! toplevel=$(git rev-parse --show-toplevel 2> /dev/null ); then
+    error "not inside a git repository"
+fi
+
+git fetch --quiet
+
+__fresh_branch_name() {
+    echo -n change-$(
+        (
+            while read f; do
+                git diff --numstat HEAD "$f"
+            done < <( git ls-files --exclude-standard --delete --modified )
+
+            while read f; do
+                lines=$(( $(wc -l "$f" | cut -d' ' -f1) + 1 ))
+                printf "%s\t%s\t%s\n" "$lines" 0 "$f"
+            done < <( git ls-files --exclude-standard --others )
+        ) | awk '{ print ($1 + $2) " " $3 }' | \
+                sort -n -r | \
+                head -n 4 | \
+                cut -d' ' -f2 | \
+                tr $'\n' '-' | \
+                tr '._./\\' '-' | \
+                tr '[:upper:]' '[:lower:]' | \
+                tr -s '-' | \
+                tr -c -d 'a-z0-9-' | \
+                sed -e 's/-$//'
+    )
+}
+
+create_fresh_branch() {
+    local base="$(__fresh_branch_name)"
+
+    for i in "" $(seq 1 100); do
+        name="${base}${i}"
+        if git checkout -b "$name" &> /dev/null; then
+            printf "%s" "$name"
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+is_in_work_branch() {
+    local branchName="$(git rev-parse --abbrev-ref HEAD)"
+
+    if [[ $branchName =~ ^master|main|release.*|dev$ ]]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+have_changed_files() {
+    if [[ $(git ls-files --exclude-standard --delete --modified --others) == "" ]]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+wip_commit() {
+    git add -A
+
+    local details="$(git diff --staged --numstat HEAD)"
+    
+    local wipMsg="$(echo -e "${wipMarker}\n\n$1\n\n${details}\n\nsource branch: ${branchName}")"
+
+    git commit -m "$wipMsg" --no-verify
+}
+
+wip_unroll_wips() {
+    local configName="$(git config user.name)"
+    local configEmail="$(git config user.email)"
+
+    set -x
+    while true; do
+        if ! $(git log -1 --format='%B' | grep -E --silent "^$wipMarker($| +)"); then
+            return 0
+        fi
+
+        if ! $(git log -1 --format='%an' | grep --silent "^$configName"); then
+            return 0
+        fi
+
+        if ! $(git log -1 --format='%ae' | grep --silent "^$configEmail"); then
+            return 0
+        fi
+
+        if ! git reset --soft HEAD~1; then
+            error "could not soft reset"
+        fi
+    done
+}
+
+if is_in_work_branch; then
+    if have_changed_files; then
+        wip_commit "<fixup wips>"
+    fi
+
+    git pull --rebase=false --squash
+
+    wip_unroll_wips
+
+    wip_commit "$1"
+
+    git push --force-with-lease
+else
+    if ! have_changed_files; then
+        error "no changed files, change some first!"
+    else
+        if branchName=$(create_fresh_branch); then
+            wip_commit "$1"
+
+            git push --set-upstream origin "$branchName"
+        else
+            error "could not create branch"
+        fi
+    fi
+fi
