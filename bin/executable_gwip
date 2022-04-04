@@ -2,19 +2,21 @@
 
 set -e
 
-stderr() { printf "%s\n" "$@" >&2; }
+wipMarker="<< WIP >>"
+markersDir="/tmp/.gwip-"
+
+stdout() { printf "%s\n" "$@"; }
+stderr() { stdout "$@" >&2; }
 error() { stderr "error: $@"; exit 1; }
 warn() { stderr "warn: $@"; }
-wipMarker="<< WIP >>"
 
-if ! toplevel=$(git rev-parse --show-toplevel 2> /dev/null ); then
-    error "not inside a git repository"
-fi
+conflictPrefix="${markersDir}-conflict-"
 
-git fetch --quiet
+stderr "gwip"
+stderr "----"
 
 __fresh_branch_name() {
-    echo -n change-$(
+    printf "%s" "change-$(
         (
             while read f; do
                 git diff --numstat HEAD "$f"
@@ -34,7 +36,7 @@ __fresh_branch_name() {
                 tr -s '-' | \
                 tr -c -d 'a-z0-9-' | \
                 sed -e 's/-$//'
-    )
+    )"
 }
 
 create_fresh_branch() {
@@ -70,20 +72,27 @@ have_changed_files() {
 }
 
 wip_commit() {
-    git add -A
+    git add .
 
     local details="$(git diff --staged --numstat HEAD)"
-    
-    local wipMsg="$(echo -e "${wipMarker}\n\n$1\n\n${details}\n\nsource branch: ${branchName}")"
 
-    git commit -m "$wipMsg" --no-verify
+    if [[ $1 != "" && $1 != "--allow-empty" ]]; then
+        local custom="$1\n\n"
+    fi
+    
+    local wipMsg="$(echo -e "${wipMarker}\n\n${custom}${details}\n")"
+
+    if [[ $2 == "--allow-empty" ]]; then
+        local allowEmpty="--allow-empty"
+    fi
+
+    git commit -m "$wipMsg" --no-verify $allowEmpty &> /dev/null
 }
 
 wip_unroll_wips() {
     local configName="$(git config user.name)"
     local configEmail="$(git config user.email)"
 
-    set -x
     while true; do
         if ! $(git log -1 --format='%B' | grep -E --silent "^$wipMarker($| +)"); then
             return 0
@@ -97,34 +106,83 @@ wip_unroll_wips() {
             return 0
         fi
 
+        stderr "  unrolling: $(git log -1 --format='%B' | tr $'\n' ' ' | tr '\t' ' ' | tr -s ' ')"
+
         if ! git reset --soft HEAD~1; then
             error "could not soft reset"
         fi
+
+        git restore --staged .
     done
 }
 
+if ! toplevel=$(git rev-parse --show-toplevel 2> /dev/null ); then
+    error "not inside a git repository"
+fi
+
+if ! git fetch --quiet; then
+    error "could not fetch"
+fi
+
+startBranch="$(git rev-parse --abbrev-ref HEAD)"
+
 if is_in_work_branch; then
     if have_changed_files; then
-        wip_commit "<fixup wips>"
+        if [[ -f "${conflictPrefix}${startBranch}" ]]; then
+            rm "${conflictPrefix}${startBranch}"
+
+            wip_commit "<< fixed conflict >>" "--allow-empty"
+
+            if ! git push --no-verify --force-with-lease &> /dev/null; then
+                error "could not push conflict resolution"
+            fi
+        else
+            wip_commit "<< fixup... >>"
+        fi
     fi
 
-    git pull --rebase=false --squash
+    stderr "pulling and squashing"
+    if ! git pull --rebase=false --squash &> /dev/null; then
+        touch "${conflictPrefix}${startBranch}"
 
+        stderr "re-run this command after fix! (do not commit, just solve conflicts)"
+        exit
+    fi
+
+    stderr "unrolling local wips:"
     wip_unroll_wips
 
+    stderr "adding and pushing wip"
     wip_commit "$1"
 
-    git push --force-with-lease
+    if ! git push --no-verify --force-with-lease &> /dev/null; then
+        error "could push wip"
+    fi
+
+    stderr "unrolling local wips ready for edit:"
+    wip_unroll_wips
 else
     if ! have_changed_files; then
-        error "no changed files, change some first!"
+        error "no changed files, change some files first!"
     else
         if branchName=$(create_fresh_branch); then
             wip_commit "$1"
 
-            git push --set-upstream origin "$branchName"
+            if ! git pull --rebase origin "$startBranch"; then
+                error "could not pull rebase"
+            fi
+
+            if ! git push --no-verify --set-upstream origin "$branchName"; then
+                error "could push branch $branchName"
+            fi
+
+            stderr "unrolling wips:"
+            wip_unroll_wips
         else
             error "could not create branch"
         fi
     fi
 fi
+
+stderr "changed:"
+git status -s
