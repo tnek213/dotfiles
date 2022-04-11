@@ -152,6 +152,7 @@ if has paru; then
   _install thunar-dropbox           # plugin for thunar that adds context-menu items for dropbox
   _install dropbox-cli              # command line interface for dropbox
   _install android-studio           # ide for android development
+  _install act                      # run github actions locally
 fi
 
 . /usr/share/nvm/init-nvm.sh        # get nvm into path
@@ -179,4 +180,5 @@ if has nvm; then
   _install madge                    # generate dependency graphs from js/ts code
   _install arkit                    # generete js/ts architecture diagrams
   _install eslint-watch             # command line improvements to eslint
+  _install @google/clasp            # Command Line Google Apps Script Projects
 fi
