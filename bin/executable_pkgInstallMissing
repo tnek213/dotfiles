@@ -96,6 +96,7 @@ if has pacman; then
   _install zip                      # create zip archives
   _install filelight                # view disk usage information
   _install pdftk                    # command-line tool for working with pdfs
+  _install freerdp                  # remote desktop client
 fi
 
 if has paru; then
