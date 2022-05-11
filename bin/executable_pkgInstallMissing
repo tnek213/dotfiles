@@ -65,6 +65,7 @@ if has pacman; then
   _install ncdu                     # disk usage analyzer with an ncurses interface
   _install direnv                   # a shell extension that manages your environment
   _install github-cli               # the github cli
+  gh extension install rnorth/gh-combine-prs # github-cli extension
   _install gnu-netcat               # used by for example https://streamhut.io/ to share the terminal
   _install translate-shell          # a command-line interface and interactive shell for google translate
   _install libqalculate             # cli calculator (named qalc)
