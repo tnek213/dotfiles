@@ -26,7 +26,6 @@ if has pacman; then
   _remove() { _is_installed "$1" && sudo pacman --noconfirm -Rs "$1"; }
 
   _install android-udev             # for android dev (for flutter)
-  _install tree                     # list directories in a a tree
   _install broot                    # tree alternative for large hierarcies, fuzzy search + tree + cd
   if [ -d /sys/class/backlight/intel_backlight ]; then
     _remove xorg-xbacklight
